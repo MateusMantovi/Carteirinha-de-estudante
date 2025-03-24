@@ -12,6 +12,15 @@ const meuPrimeiroApp = Vue.createApp({
       novoItem: "",
       itens: [],
       darkMode: false,
+
+      // Dados para a carteirinha
+      estudante: {
+        nome: "",
+        matricula: "",
+        curso: "",
+        validade: "",
+        foto: "",
+      },
     };
   },
   methods: {
@@ -24,10 +33,14 @@ const meuPrimeiroApp = Vue.createApp({
     removerItem(index) {
       this.itens.splice(index, 1);
     },
+    formatarValidade(data) {
+      if (!data) return "";
+      const [ano, mes] = data.split("-");
+      return `${mes}/${ano}`;
+    },
   },
   watch: {
     darkMode(newVal) {
-      // Garante que a classe seja aplicada ao body também se necessário
       if (newVal) {
         document.body.classList.add("dark-theme");
       } else {
