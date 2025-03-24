@@ -5,49 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carteira de Estudante - Versão 1.0</title>
     <!-- Carrega Vue.js via CDN -->
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js"></script>
   </head>
-  <body>
-    <!-- Div principal onde o Vue será montado -->
-    <div id="app">
-      <h1>{{ titulo }}</h1>
+    <body>
 
-      <!-- Interpolação de texto -->
-      <p>Nome: {{ estudante.nome }}</p>
-      <p>Matrícula: {{ estudante.matricula }}</p>
-
-      <!-- Diretiva v-bind para atributos -->
-      <img
-        v-bind:src="estudante.foto"
-        v-bind:alt="'Foto de ' + estudante.nome"
-        width="100"
-      />
-
-      <!-- Diretiva v-model para two-way data binding -->
-      <div>
-        <label for="curso">Curso:</label>
-        <input type="text" id="curso" v-model="estudante.curso" />
-        <p>Curso atual: {{ estudante.curso }}</p>
+      <!-- 
+          DIV principal onde o Vue será montado (#divPrincipal)
+          Todas as diretivas Vue funcionarão apenas dentro desta div
+      -->
+      <div id="divPrincipal">
+          <!-- 
+              INTERPOLAÇÃO DE TEXTO (Mustache/Chaves Duplas)
+              Exibe o valor da variável mensagemInicial do data()
+              Quando o valor muda no JavaScript, a view é atualizada automaticamente
+          -->
+          <h1>{{ mensagemInicial }}</h1>
+  
+          <!-- 
+              INTERPOLAÇÃO COM EXPRESSÃO JS
+              Usamos um operador ternário para condicionalmente mostrar msgInicial ou 'Sem mensagens!'
+              Depende do valor de verMsg (true/false)
+          -->
+          <h2>{{ verMsg ? msgInicial : 'Sem mensagens!' }}</h2>
+  
+          <!-- 
+              DIRETIVA V-MODEL
+              Cria uma ligação bidirecional entre o input e a variável verMsg
+              Quando o checkbox é marcado/desmarcado, verMsg é atualizado
+              Quando verMsg é alterado no JS, o checkbox reflete o estado
+          -->
+          <input type="checkbox" v-model="verMsg"> Mostrar Mensagem </input>
+  
+          <!-- 
+              DIRETIVA V-BIND
+              Liga dinamicamente um atributo HTML (style) a uma expressão JavaScript
+              Neste caso, a cor do texto será controlada pela variável corMsg
+              Sintaxe: v-bind:atributo="expressão" ou :atributo="expressão" (forma abreviada)
+          -->
+          <input type="text" v-model="corMsg" placeholder="Digite uma cor (red, green, blue)">
+          <h3 v-bind:style="{ color: corMsg }">Texto com cor dinâmica</h3>
+  
+          <!-- 
+              DIRETIVAS V-IF, V-ELSE-IF, V-ELSE
+              Renderiza condicionalmente elementos baseados em expressões booleanas
+              Elementos são adicionados/removidos do DOM conforme a condição
+          -->
+          <div>
+              <h4 v-if="corMsg === 'red'">Cor selecionada: VERMELHO</h4>
+              <h4 v-else-if="corMsg === 'green'">Cor selecionada: VERDE</h4>
+              <h4 v-else-if="corMsg === 'blue'">Cor selecionada: AZUL</h4>
+              <h4 v-else>Cor desconhecida</h4>
+          </div>
+  
+          <!-- 
+              DIRETIVA V-SHOW
+              Similar ao v-if, mas usa CSS (display:none) para esconder o elemento
+              O elemento sempre existe no DOM, apenas sua visibilidade é controlada
+              Melhor para alternâncias frequentes, enquanto v-if é melhor para condições estáveis
+          -->
+          <div v-show="verMsg">
+              <p>Esta mensagem só aparece quando verMsg é true (usando v-show)</p>
+          </div>
+  
+          <!-- 
+              DIRETIVA V-FOR
+              Renderiza uma lista de elementos baseada em um array
+              Sintaxe: v-for="item in items" :key="identificador-único"
+              O :key é obrigatório para ajudar o Vue a identificar cada elemento na lista
+          -->
+          <ul>
+              <li v-for="cor in cores" :key="cor.ptbr">
+                  {{ cor.ptbr }} (v-for exemplo)
+              </li>
+          </ul>
       </div>
-
-      <!-- Diretiva v-if para renderização condicional -->
-      <div v-if="estudante.ativo">
-        <p>Status: Matrícula ativa</p>
-      </div>
-      <div v-else>
-        <p>Status: Matrícula inativa</p>
-      </div>
-
-      <!-- Diretiva v-for para listas -->
-      <h3>Disciplinas matriculadas:</h3>
-      <ul>
-        <li v-for="disciplina in disciplinas" :key="disciplina.codigo">
-          {{ disciplina.nome }} ({{ disciplina.codigo }})
-        </li>
-      </ul>
-    </div>
-
-    <!-- Link para o arquivo JavaScript -->
-    <script src="meuScript.js"></script>
+  
+      <!-- Carrega nosso script Vue.js -->
+      <script src="scripts.js"></script>
   </body>
 </html>
