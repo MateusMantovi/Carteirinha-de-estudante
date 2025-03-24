@@ -6,6 +6,7 @@
     <title>Carteira de Estudante - Versão 1.0</title>
     <!-- Carrega Vue.js via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="styles.css">
   </head>
     <body>
 
@@ -13,72 +14,58 @@
           DIV principal onde o Vue será montado (#divPrincipal)
           Todas as diretivas Vue funcionarão apenas dentro desta div
       -->
-      <div id="divPrincipal">
-          <!-- 
-              INTERPOLAÇÃO DE TEXTO (Mustache/Chaves Duplas)
-              Exibe o valor da variável mensagemInicial do data()
-              Quando o valor muda no JavaScript, a view é atualizada automaticamente
-          -->
-          <h1>{{ mensagemInicial }}</h1>
-  
-          <!-- 
-              INTERPOLAÇÃO COM EXPRESSÃO JS
-              Usamos um operador ternário para condicionalmente mostrar msgInicial ou 'Sem mensagens!'
-              Depende do valor de verMsg (true/false)
-          -->
-          <h2>{{ verMsg ? msgInicial : 'Sem mensagens!' }}</h2>
-  
-          <!-- 
-              DIRETIVA V-MODEL
-              Cria uma ligação bidirecional entre o input e a variável verMsg
-              Quando o checkbox é marcado/desmarcado, verMsg é atualizado
-              Quando verMsg é alterado no JS, o checkbox reflete o estado
-          -->
-          <input type="checkbox" v-model="verMsg"> Mostrar Mensagem </input>
-  
-          <!-- 
-              DIRETIVA V-BIND
-              Liga dinamicamente um atributo HTML (style) a uma expressão JavaScript
-              Neste caso, a cor do texto será controlada pela variável corMsg
-              Sintaxe: v-bind:atributo="expressão" ou :atributo="expressão" (forma abreviada)
-          -->
-          <input type="text" v-model="corMsg" placeholder="Digite uma cor (red, green, blue)">
-          <h3 v-bind:style="{ color: corMsg }">Texto com cor dinâmica</h3>
-  
-          <!-- 
-              DIRETIVAS V-IF, V-ELSE-IF, V-ELSE
-              Renderiza condicionalmente elementos baseados em expressões booleanas
-              Elementos são adicionados/removidos do DOM conforme a condição
-          -->
-          <div>
-              <h4 v-if="corMsg === 'red'">Cor selecionada: VERMELHO</h4>
-              <h4 v-else-if="corMsg === 'green'">Cor selecionada: VERDE</h4>
-              <h4 v-else-if="corMsg === 'blue'">Cor selecionada: AZUL</h4>
-              <h4 v-else>Cor desconhecida</h4>
-          </div>
-  
-          <!-- 
-              DIRETIVA V-SHOW
-              Similar ao v-if, mas usa CSS (display:none) para esconder o elemento
-              O elemento sempre existe no DOM, apenas sua visibilidade é controlada
-              Melhor para alternâncias frequentes, enquanto v-if é melhor para condições estáveis
-          -->
-          <div v-show="verMsg">
-              <p>Esta mensagem só aparece quando verMsg é true (usando v-show)</p>
-          </div>
-  
-          <!-- 
-              DIRETIVA V-FOR
-              Renderiza uma lista de elementos baseada em um array
-              Sintaxe: v-for="item in items" :key="identificador-único"
-              O :key é obrigatório para ajudar o Vue a identificar cada elemento na lista
-          -->
-          <ul>
-              <li v-for="cor in cores" :key="cor.ptbr">
-                  {{ cor.ptbr }} (v-for exemplo)
-              </li>
-          </ul>
-      </div>
+      <div id="divPrincipal" :class="{'dark-theme': darkMode}">
+        <!-- Seção original mantida -->
+        <h1>{{ mensagemInicial }}</h1>
+        <h2>{{ verMsg ? msgInicial : 'Sem mensagens!' }}</h2>
+        <input type="checkbox" v-model="verMsg"> Mostrar Mensagem </input>
+        <input type="text" v-model="corMsg" placeholder="Digite uma cor (red, green, blue)">
+        <h3 v-bind:style="{ color: corMsg }">Texto com cor dinâmica</h3>
+        <div>
+            <h4 v-if="corMsg === 'red'">Cor selecionada: VERMELHO</h4>
+            <h4 v-else-if="corMsg === 'green'">Cor selecionada: VERDE</h4>
+            <h4 v-else-if="corMsg === 'blue'">Cor selecionada: AZUL</h4>
+            <h4 v-else>Cor desconhecida</h4>
+        </div>
+        <div v-show="verMsg">
+            <p>Esta mensagem só aparece quando verMsg é true</p>
+        </div>
+        <ul>
+            <li v-for="cor in cores" :key="cor.ptbr">
+                {{ cor.ptbr }} (v-for exemplo)
+            </li>
+        </ul>
+
+        <!-- Nova seção - Formulário e lista dinâmica -->
+        <div class="form-group">
+            <h2>Adicionar Itens à Lista</h2>
+            <input 
+                type="text" 
+                v-model="novoItem" 
+                placeholder="Digite um novo item"
+                @keyup.enter="adicionarItem"
+            >
+            <button @click="adicionarItem">Adicionar</button>
+        </div>
+
+        <!-- Checkbox para alternar o tema escuro -->
+        <div class="theme-switch">
+            <input type="checkbox" v-model="darkMode" id="darkMode">
+            <label for="darkMode">Ativar Tema Escuro</label>
+        </div>
+
+        <!-- Lista dinâmica de itens -->
+        <div>
+            <h2>Lista de Itens:</h2>
+            <ul>
+                <li v-for="(item, index) in itens" :key="index">
+                    {{ item }}
+                    <button @click="removerItem(index)">Remover</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
   
       <!-- Carrega nosso script Vue.js -->
       <script src="scripts.js"></script>
