@@ -1,40 +1,47 @@
-# Carteira de Estudante Virtual - Vue.js
+# Carteira de Estudante - Versão 3.0
 
-Este é um projeto simples de carteira de estudante virtual desenvolvido com Vue.js 3 usando o modo CDN.
+Aplicação Vue.js que simula uma carteira de estudante interativa com funcionalidades dinâmicas e tema escuro/claro.
 
-## Funcionalidades implementadas
+## Funcionalidades
 
-- Exibição de dados do estudante (nome, matrícula, curso)
-- Foto do estudante
-- Atualização em tempo real do curso (two-way data binding)
-- Status da matrícula (condicional)
-- Lista de disciplinas matriculadas
+### Seção Original
 
-## Diretivas Vue.js utilizadas
+- Mensagem inicial dinâmica com controle de visibilidade
+- Mudança de cor de texto conforme entrada do usuário
+- Exibição condicional de mensagens baseadas na cor selecionada
+- Lista de cores usando v-for
+- Sistema para adicionar/remover itens de uma lista
+- Alternador de tema escuro/claro
 
-1. **Interpolação ({{ }})**: Mostra valores do data no HTML
-2. **v-bind**: Liga atributos HTML a dados Vue (ex: src da imagem)
-3. **v-model**: Two-way data binding (input do curso)
-4. **v-if/v-else**: Renderização condicional (status da matrícula)
-5. **v-for**: Renderização de listas (disciplinas)
+### Carteirinha de Estudante
 
-## Como executar
+- Formulário para preenchimento dos dados do estudante:
+  - Nome
+  - Matrícula
+  - Curso
+  - Validade (com formatação automática)
+  - URL da foto
+- Visualização em tempo real da carteirinha
+- Design estilizado com aparência profissional
 
-1. Clone este repositório
-2. Abra o arquivo `index.html` em qualquer navegador moderno
+## Tecnologias Utilizadas
 
-## Histórico de versões
+- Vue.js 3
+- HTML5
+- CSS3 (com transições e variáveis)
 
-- 0.1: Arquivos vazios criados
-- 0.2: HTML completo
-- 0.3: JavaScript completo
-- 1.0: Projeto em produção
+## Como Usar
 
-## Configuração do Git
+1. Preencha os campos do formulário na seção "Dados do Estudante"
+2. A carteirinha será atualizada automaticamente
+3. Use o checkbox "Ativar Tema Escuro" para alternar entre os temas
+4. Na seção original, experimente:
+   - Mostrar/ocultar mensagens
+   - Mudar cores dinamicamente
+   - Adicionar/remover itens da lista
 
-Para configurar seu Git antes de começar:
+## Estrutura do Código
 
-```bash
-git config --global user.name "Seu Nome"
-git config --global user.email "seu@email.com"
-```
+- `index.html`: Estrutura principal com template Vue
+- `styles.css`: Estilos CSS para toda a aplicação
+- `scripts.js`: Lógica Vue com dados, métodos e watchers
