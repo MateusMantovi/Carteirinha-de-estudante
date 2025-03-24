@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carteira de Estudante - Versão 1.0</title>
+    <!-- Carrega Vue.js via CDN -->
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <!-- Div principal onde o Vue será montado -->
+    <div id="app">
+      <h1>{{ titulo }}</h1>
+
+      <!-- Interpolação de texto -->
+      <p>Nome: {{ estudante.nome }}</p>
+      <p>Matrícula: {{ estudante.matricula }}</p>
+
+      <!-- Diretiva v-bind para atributos -->
+      <img
+        v-bind:src="estudante.foto"
+        v-bind:alt="'Foto de ' + estudante.nome"
+        width="100"
+      />
+
+      <!-- Diretiva v-model para two-way data binding -->
+      <div>
+        <label for="curso">Curso:</label>
+        <input type="text" id="curso" v-model="estudante.curso" />
+        <p>Curso atual: {{ estudante.curso }}</p>
+      </div>
+
+      <!-- Diretiva v-if para renderização condicional -->
+      <div v-if="estudante.ativo">
+        <p>Status: Matrícula ativa</p>
+      </div>
+      <div v-else>
+        <p>Status: Matrícula inativa</p>
+      </div>
+
+      <!-- Diretiva v-for para listas -->
+      <h3>Disciplinas matriculadas:</h3>
+      <ul>
+        <li v-for="disciplina in disciplinas" :key="disciplina.codigo">
+          {{ disciplina.nome }} ({{ disciplina.codigo }})
+        </li>
+      </ul>
+    </div>
+
+    <!-- Link para o arquivo JavaScript -->
+    <script src="meuScript.js"></script>
+  </body>
+</html>
