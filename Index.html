@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carteira de Estudante - Versão 3.0</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="divPrincipal" :class="{'dark-theme': darkMode}">
+        <!-- Seção original -->
+        <div class="original-section">
+            <h1>{{ mensagemInicial }}</h1>
+            <h2>{{ verMsg ? msgInicial : 'Sem mensagens!' }}</h2>
+            <input type="checkbox" v-model="verMsg"> Mostrar Mensagem </input>
+            <input type="text" v-model="corMsg" placeholder="Digite uma cor (red, green, blue)">
+            <h3 v-bind:style="{ color: corMsg }">Texto com cor dinâmica</h3>
+            <div>
+                <h4 v-if="corMsg === 'red'">Cor selecionada: VERMELHO</h4>
+                <h4 v-else-if="corMsg === 'green'">Cor selecionada: VERDE</h4>
+                <h4 v-else-if="corMsg === 'blue'">Cor selecionada: AZUL</h4>
+                <h4 v-else>Cor desconhecida</h4>
+            </div>
+            <div v-show="verMsg">
+                <p>Esta mensagem só aparece quando verMsg é true</p>
+            </div>
+            <ul>
+                <li v-for="cor in cores" :key="cor.ptbr">
+                    {{ cor.ptbr }} (v-for exemplo)
+                </li>
+            </ul>
+
+            <div class="form-group">
+                <h2>Adicionar Itens à Lista</h2>
+                <input 
+                    type="text" 
+                    v-model="novoItem" 
+                    placeholder="Digite um novo item"
+                    @keyup.enter="adicionarItem"
+                >
+                <button @click="adicionarItem">Adicionar</button>
+            </div>
+
+            <div class="theme-switch">
+                <input type="checkbox" v-model="darkMode" id="darkMode">
+                <label for="darkMode">Ativar Tema Escuro</label>
+            </div>
+
+            <div>
+                <h2>Lista de Itens:</h2>
+                <ul>
+                    <li v-for="(item, index) in itens" :key="index">
+                        {{ item }}
+                        <button @click="removerItem(index)">Remover</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Nova seção - Carteirinha de Estudante -->
+        <div class="carteirinha-section">
+            <div class="form-group">
+                <h2>Dados do Estudante</h2>
+                <div>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" v-model="estudante.nome">
+                </div>
+                <div>
+                    <label for="matricula">Matrícula:</label>
+                    <input type="text" id="matricula" v-model="estudante.matricula">
+                </div>
+                <div>
+                    <label for="curso">Curso:</label>
+                    <input type="text" id="curso" v-model="estudante.curso">
+                </div>
+                <div>
+                    <label for="validade">Validade:</label>
+                    <input type="month" id="validade" v-model="estudante.validade">
+                </div>
+                <div>
+                    <label for="foto">URL da Foto:</label>
+                    <input type="text" id="foto" v-model="estudante.foto" placeholder="Cole o link de uma imagem">
+                </div>
+            </div>
+
+            <div class="carteirinha-preview">
+                <div class="carteirinha">
+                    <div class="header">
+                        <h3>UNIVERSIDADE VUE</h3>
+                        <p>Carteira de Identificação Estudantil</p>
+                    </div>
+                    <div class="content">
+                        <div class="foto">
+                            <img :src="estudante.foto || 'https://via.placeholder.com/150'" alt="Foto do estudante">
+                        </div>
+                        <div class="dados">
+                            <p><strong>Nome:</strong> {{ estudante.nome || '_________________' }}</p>
+                            <p><strong>Matrícula:</strong> {{ estudante.matricula || '__________' }}</p>
+                            <p><strong>Curso:</strong> {{ estudante.curso || '_________________' }}</p>
+                            <p><strong>Validade:</strong> {{ formatarValidade(estudante.validade) || '__/____' }}</p>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p>Válida somente com documento de identidade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
